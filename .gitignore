@@ -1,0 +1,13 @@
+.DS_Store
+.vscode
+node_modules/
+npm-debug.log*
+android/app/build/
+android/.idea/libraries/
+android/build/
+android/.gradle/
+android/.idea/
+.expo/
+package-lock.json
+android/local.properties
+android/app/app.iml

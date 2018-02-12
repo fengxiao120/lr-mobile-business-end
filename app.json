@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "sdkVersion": "23.0.0",
+    "name": "LocalRecommends",
+    "icon": "./lr.png",
+    "version": "1.0.0",
+    "slug": "lrapp",
+    "privacy": "unlisted",
+    "ios": {
+      "bundleIdentifier": "com.localrecommends.app"
+    },
+    "android": {
+      "package": "com.localrecommends.lrapp"
+    }
+  },
+  "name": "LR_mobile",
+  "displayName": "LocalRecommends"
+}
