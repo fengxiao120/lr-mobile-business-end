@@ -7,26 +7,24 @@ import { screen, system, tool } from './common'
 import TabBarItem from './widget/TabBarItem'
 
 import HomeScene from './scene/Home/HomeScene'
-import NotificationScene from './scene/Home/NotificationScene'
-import Wishlist from './scene/Wishlist/Wishlist'
-
+import MyOffers from './scene/MyOffers/MyOffers'
 import MeScene from './scene/Me/MeScene'
 
+import NotificationScene from './scene/Home/NotificationScene'
 import WebScene from './widget/WebScene'
 
-import ListScene from './scene/List/ListScene'
-import ShopScene from './scene/Shop/ShopScene'
+
+import OpeningHoursScene from './scene/Home/OpeningHoursScene'
 import ProductScene from './scene/Product/ProductScene'
 import OfferScene from './scene/Offer/OfferScene'
 import ReviewScene from './scene/Review/ReviewScene'
-import WriteReviewScene from './scene/Review/WriteReviewScene'
+
+
 import LoginScene from './scene/Auth/LoginScene'
 import ResetPasswordScene from './scene/Auth/ResetPasswordScene'
 import SignupScene from './scene/Auth/SignupScene'
-import OpeningHoursScene from './scene/Shop/OpeningHoursScene'
 
-import MyReviewsScene from './scene/Me/MyReviewsScene'
-import RecentScene from './scene/Me/RecentScene'
+
 import BusinessScene from './scene/Me/BusinessScene'
 import AboutScene from './scene/Me/AboutScene'
 import ContactScene from './scene/Me/ContactScene'
@@ -39,7 +37,7 @@ import EditSettingScene from './scene/Me/EditSettingScene'
 
 import Storage from './common/storage'
 
-const lightContentScenes = ['Home', 'Nearby', 'Wishlist', 'Me']
+const lightContentScenes = ['Home', 'MyOffers', 'Me']
 
 function getCurrentRouteName(navigationState) {
     if (!navigationState) {
@@ -58,7 +56,6 @@ let loggedIn = false
 class RootScene extends PureComponent {
     constructor() {
         super()
-        console.log('root scene is called again')
         this.state = {
             user: null,
         }
@@ -111,19 +108,19 @@ const Tab = TabNavigator({
         }),
     },
 
-    Wishlist: {
-        screen: Wishlist,
+    MyOffers: {
+        screen: MyOffers,
         navigationOptions: ({ navigation }) => ({
             tabBarOnPress: async () => {
                 if(__userStatusChanged){
                     __userStatusChanged = false
                     let loggedIn = await ___login(navigation, 'Me')
                     if (loggedIn) {
-                        navigation.navigate('Wishlist', { date: new Date() })
+                        navigation.navigate('MyOffers', { date: new Date() })
                     }
                 }
                 else
-                    navigation.navigate('Wishlist')
+                    navigation.navigate('MyOffers')
             },
             tabBarLabel: 'My Offers',
             tabBarIcon: ({ focused, tintColor }) => (
@@ -173,22 +170,16 @@ const Tab = TabNavigator({
 const Navigator = StackNavigator({
     Tab: { screen: Tab },
     Web: { screen: WebScene },
-    List: { screen: ListScene },
-    Shop: { screen: ShopScene },
     OpeningHours: { screen: OpeningHoursScene },
     Offer: { screen: OfferScene },
     Product: { screen: ProductScene },
     Review: { screen: ReviewScene },
-    WriteReview: { screen: WriteReviewScene },
     Login: { screen: LoginScene },
     Signup: { screen: SignupScene },
     ResetPassword: { screen: ResetPasswordScene },
-    MyReviews: { screen: MyReviewsScene },
-    Recent: { screen: RecentScene },
     Business: { screen: BusinessScene },
     Contact: { screen: ContactScene },
     About: { screen: AboutScene },
-    Recommend: { screen: RecommendScene },
     Profile: { screen: ProfileScene },
     Setting: { screen: SettingScene },
     EditProfile: { screen: EditProfileScene },

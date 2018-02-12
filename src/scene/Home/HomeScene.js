@@ -31,7 +31,7 @@ class HomeScene extends PureComponent {
                 <NavigationItem
                     icon={'edit'}
                     color={'white'}
-                    size={20}
+                    size={24}
                     style={{ alignSelf: 'center', marginLeft: 20, marginTop:5 }}
                     onPress={()=>alert('Edit:To do')}
                 />
