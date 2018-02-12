@@ -8,7 +8,7 @@ import StarRating from 'react-native-star-rating'
 import Moment from 'moment';
 import _ from 'lodash'
 
-import ImageGalleryCell from '../Shop/ImageGalleryCell'
+import ImageGalleryCell from '../Home/ImageGalleryCell'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import ReviewApi from '../../api/review'

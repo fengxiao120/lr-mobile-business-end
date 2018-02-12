@@ -9,7 +9,7 @@ import Storage from '../../common/storage'
 
 import shopApi from '../../api/shop'
 
-import ShopCell from '../Shop/ShopCell'
+import ShopCell from '../Home/ShopCell'
 
 import _ from 'lodash'
 
@@ -17,20 +17,10 @@ import _ from 'lodash'
 class Wishlist extends PureComponent {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: (
-            "Wishlist"
+            "My Offers"
         ),
         headerLeft: (<View></View>),
-        headerRight: (
-            <NavigationItem
-                icon={'bell'}
-                color={'white'}
-                size={20}
-                style={{ alignSelf: 'center', marginRight: screen.width / 18 }}
-                onPress={() => {
-                    navigation.navigate('Notification')
-                }}
-            />
-        )
+        headerRight: (<View></View>),
     })
 
     constructor(props: Object) {
