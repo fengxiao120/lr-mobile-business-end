@@ -142,7 +142,7 @@ const Tab = TabNavigator({
                     navigation.navigate('Me', { date: new Date() })
                 }
             },
-            tabBarLabel: 'Account',
+            tabBarLabel: 'My Business',
             tabBarIcon: ({ focused, tintColor }) => (
                 <TabBarItem tintColor={tintColor}
                     focused={focused}
