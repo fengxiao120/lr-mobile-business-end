@@ -181,7 +181,7 @@ class ReviewCell extends PureComponent {
                             justifyContent:'center',
                             flexDirection:'row',alignItems:'center',marginRight:6}}
                             onPress={this.thumbOnPress}>
-                            <FontAwesome name={this.state.voted?'thumbs-up':'thumbs-o-up'} color={'#02aaa5'}  size={this.props.size||22}/>
+                            <FontAwesome name={'thumbs-o-up'} color={'#02aaa5'}  size={this.props.size||22}/>
                             <Text style={{marginLeft:3}}>{this.state.votes?this.state.votes:null}</Text>
                         </TouchableOpacity>
                     </View>                    
