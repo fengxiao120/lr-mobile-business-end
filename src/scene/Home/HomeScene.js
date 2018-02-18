@@ -33,7 +33,7 @@ class HomeScene extends PureComponent {
                     color={'white'}
                     size={24}
                     style={{ alignSelf: 'center', marginLeft: 20, marginTop:5 }}
-                    onPress={()=>alert('Edit:To do')}
+                    onPress={()=>navigation.navigate('EditMyShop', { shop: navigation.state.params.shop})}
                 />
             </View>
         ),
@@ -64,12 +64,13 @@ class HomeScene extends PureComponent {
     }
 
     async requestData() {
-        let json = await shopApi.get(2) //Dummy data
+        let json = await shopApi.get(8) //Dummy data
         let shop = json.data
         this.setState({
             shop: shop,
             loading:false,
         })
+        this.props.navigation.setParams({shop:shop})
     }
 
     openExternalApp(url) {

@@ -14,6 +14,7 @@ import NotificationScene from './scene/Home/NotificationScene'
 import WebScene from './widget/WebScene'
 
 
+import EditShopScene from './scene/Home/EditShopScene'
 import OpeningHoursScene from './scene/Home/OpeningHoursScene'
 import ProductScene from './scene/Product/ProductScene'
 import OfferScene from './scene/Offer/OfferScene'
@@ -186,6 +187,7 @@ const Navigator = StackNavigator({
     EditProfileImage: { screen: EditProfileImageScene },
     EditSetting: { screen: EditSettingScene },
     Notification: { screen: NotificationScene },
+    EditMyShop: { screen: EditShopScene},
 }, {
         navigationOptions: {
             elevation: 0,
