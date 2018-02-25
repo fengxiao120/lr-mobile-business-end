@@ -5,6 +5,9 @@ import CONFIG from './config'
 global.__userStatusChanged = true
 global.___gettingToken = false
 
+global.__offers = []
+global.__shop = {}
+
 global.FetchWithHeaders = async function (url, data, multipart) {
     let request = {
         method: 'POST',

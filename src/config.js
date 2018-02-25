@@ -1,7 +1,8 @@
 export default {
     API_ROOT:"https://api.localrecommends.com/api/",
-    // API_ROOT:"http://192.168.0.100:8080/api/",
     IMAGE_HOST:"https://s3-ap-southeast-1.amazonaws.com/data.localrecommends.com/prod/",
+    // API_ROOT:"http://192.168.31.106:8080/api/",
+    // IMAGE_HOST:"https://s3-ap-southeast-1.amazonaws.com/data.localrecommends.com/dev/",
     CATEGORY_ICONS:{
         food: require('./img/Home/food.png'),
         beauty: require('./img/Home/beauty.png'),

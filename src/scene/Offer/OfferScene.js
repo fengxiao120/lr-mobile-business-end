@@ -4,6 +4,8 @@ import {
     ScrollView, TouchableOpacity,
     ListView, Image, StatusBar, FlatList, ActivityIndicator, Platform, Linking
 } from 'react-native'
+
+import { screen, system, tool } from '../../common'
 import { color, Button, NavigationItem, RefreshListView, RefreshState, Separator, SpacingView, FullWidthImage } from '../../widget'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CONFIG from '../../config'
@@ -55,7 +57,7 @@ class OfferScene extends PureComponent {
                 </View>
             </Modal>
             <TouchableOpacity onPress={() => { this.preview(this.props.navigation.state.params.offer.album[0] && this.props.navigation.state.params.offer.album[0].uuid) }}>
-                <Image resizeMode={'stretch'} source={{ uri: CONFIG.IMAGE_HOST + (this.props.navigation.state.params.offer.album[0] && this.props.navigation.state.params.offer.album[0].uuid) }} style={{ height: 240 }} />
+                <Image resizeMode={'stretch'} source={{ uri: CONFIG.IMAGE_HOST + (this.props.navigation.state.params.offer.album[0] && this.props.navigation.state.params.offer.album[0].uuid) }} style={{ height: 240, width:screen.width }} />
             </TouchableOpacity>
             <Text style={{ padding: 10, fontSize: 16, fontWeight: 'bold' }}>{this.props.navigation.state.params.offer.name}</Text>
             <SpacingView height={3} />

@@ -8,7 +8,7 @@ import TabBarItem from './widget/TabBarItem'
 
 import HomeScene from './scene/Home/HomeScene'
 import MyOffers from './scene/MyOffers/MyOffers'
-import MeScene from './scene/Me/MeScene'
+import MyBusiness from './scene/Me/MeScene'
 
 import NotificationScene from './scene/Home/NotificationScene'
 import WebScene from './widget/WebScene'
@@ -95,19 +95,26 @@ class RootScene extends PureComponent {
 }
 
 const Tab = TabNavigator({
-    Home: {
-        screen: HomeScene,
+    MyBusiness: {
+        screen: MyBusiness,
         navigationOptions: ({ navigation }) => ({
-            tabBarLabel: 'My Shop',
+            tabBarOnPress: async () => {
+                let loggedIn = await ___login(navigation, 'MyBusiness')
+                if (loggedIn) {
+                    navigation.navigate('MyBusiness', { date: new Date() })
+                }
+            },
+            header:null,
+            tabBarLabel: 'My Business',
             tabBarIcon: ({ focused, tintColor }) => (
                 <TabBarItem tintColor={tintColor}
                     focused={focused}
-                    normalImage={require('./img/tabbar/pfb_tabbar_homepage.png')}
-                    selectedImage={require('./img/tabbar/pfb_tabbar_homepage_selected.png')}
+                    normalImage={require('./img/tabbar/pfb_tabbar_mine.png')}
+                    selectedImage={require('./img/tabbar/pfb_tabbar_mine_selected.png')}
                 />
             )
         }),
-    },
+    },    
 
     MyOffers: {
         screen: MyOffers,
@@ -134,25 +141,22 @@ const Tab = TabNavigator({
         }),
     },
 
-    Me: {
-        screen: MeScene,
+    Home: {
+        screen: HomeScene,
         navigationOptions: ({ navigation }) => ({
-            tabBarOnPress: async () => {
-                let loggedIn = await ___login(navigation, 'Me')
-                if (loggedIn) {
-                    navigation.navigate('Me', { date: new Date() })
-                }
-            },
-            tabBarLabel: 'My Business',
+            tabBarOnPress: () => {
+                navigation.navigate('Home', { date: new Date() })
+            },            
+            tabBarLabel: 'My Shop',
             tabBarIcon: ({ focused, tintColor }) => (
                 <TabBarItem tintColor={tintColor}
                     focused={focused}
-                    normalImage={require('./img/tabbar/pfb_tabbar_mine.png')}
-                    selectedImage={require('./img/tabbar/pfb_tabbar_mine_selected.png')}
+                    normalImage={require('./img/tabbar/pfb_tabbar_homepage.png')}
+                    selectedImage={require('./img/tabbar/pfb_tabbar_homepage_selected.png')}
                 />
             )
         }),
-    },
+    },    
 }, {
         tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',

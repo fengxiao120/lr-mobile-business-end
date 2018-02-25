@@ -27,8 +27,6 @@ class EditShopScene extends PureComponent {
         this.state = props.navigation.state.params.shop
         this.state.recommendations =  []
         this.state.loading = false
-        
-
     }
 
 

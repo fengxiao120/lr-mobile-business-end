@@ -2,7 +2,7 @@
 
 //import liraries
 import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView, RefreshControl, ActivityIndicator } from 'react-native'
 
 import { Heading1, Heading2, Paragraph } from '../../widget/Text'
 import { screen, system, tool } from '../../common'
@@ -11,6 +11,9 @@ import MeSceneCell from './MeSceneCell'
 import CONFIG from '../../config'
 import Storage from '../../common/storage'
 import Bus from '../../common/bus'
+
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import shopApi from '../../api/shop'
 // create a component
 class MeScene extends PureComponent {
 
@@ -23,16 +26,11 @@ class MeScene extends PureComponent {
         }
     }
 
-
-    state: {
-        isRefreshing: boolean
-    }
-
     constructor(props: Object) {
         super(props)
 
         this.state = {
-            isRefreshing: false,
+            loading: false,
         }
         this.editProfileImage = this.editProfileImage.bind(this)
     }
@@ -44,17 +42,25 @@ class MeScene extends PureComponent {
             ref.getUser()
         });
     }
+
+    componentDidMount() {
+        this.setState({loading:true})
+        this.requestData()
+    }
+
+    async requestData() {
+        let json = await shopApi.get(378) //Dummy data
+        let shop = json.data
+        __shop = shop
+        __offers = shop.offers
+        this.setState({
+            loading:false,
+        })        
+    }    
+
     async getUser() {
         let user = await Storage.get("user")
         this.setState({ user: user })
-    }
-
-    onHeaderRefresh() {
-        this.setState({ isRefreshing: true })
-
-        setTimeout(() => {
-            this.setState({ isRefreshing: false })
-        }, 2000);
     }
 
     componentWillReceiveProps(props) {
@@ -70,18 +76,26 @@ class MeScene extends PureComponent {
     }
 
     renderHeader = () => {
-        let avatar = this.state.user && this.state.user.picture ?
-            (<TouchableOpacity onPress={this.editProfileImage}>
-                <Image style={styles.avatar} source={{ uri: CONFIG.IMAGE_HOST + this.state.user.picture.uuid + '_thumb' }} />
-            </TouchableOpacity>) :
-            (<TouchableOpacity onPress={this.editProfileImage}>
-                <Image style={styles.avatar} source={require('../../img/Me/avatar.png')} />
-            </TouchableOpacity>)
         return (
             <View style={styles.header}>
-                <View style={styles.userContainer}>
-                    {avatar}
-                    <Heading1 style={{ color: 'white' }}>{this.state.user ? 'Hi, ' + this.state.user.nickName : null}</Heading1>
+                <Text style={{textAlign:'center', color:'white', fontSize:16, height:56, textAlignVertical:'center'}}>{__shop.name}</Text>
+                <View style={{flexDirection:'row', marginTop:20}}>
+                    <TouchableOpacity style={{width:screen.width*0.25, alignItems:'center',}}>
+                        <FontAwesome name={'barcode'} color={'white'} size={30} />
+                        <Text style={{color:'white',}}>Scan</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{width:screen.width*0.25, alignItems:'center',}}>
+                        <FontAwesome name={'keyboard-o'} color={'white'} size={30} />
+                        <Text style={{color:'white',}}>Code</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{width:screen.width*0.25, alignItems:'center',}}>
+                        <FontAwesome name={'cart-arrow-down'} color={'white'} size={30} />
+                        <Text style={{color:'white',}}>Order</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{width:screen.width*0.25, alignItems:'center',}}>
+                        <FontAwesome name={'history'} color={'white'} size={30} />
+                        <Text style={{color:'white',}}>Transcation</Text>
+                    </TouchableOpacity>                                                            
                 </View>
             </View>
         )
@@ -117,19 +131,27 @@ class MeScene extends PureComponent {
     }
 
     render() {
-        if (this.state.user)
+        if(this.state.loading)
+            return ( <View style={{height:300,justifyContent:'center', alignItems: 'center',}}>
+                    <ActivityIndicator size="large" color={color.theme} />
+                </View>)
+
+        else
             return (
                 <ScrollView style={{ flex: 1, backgroundColor: 'transparent', width: screen.width, height: screen.width * 1.5 }}>
                     {this.renderHeader()}
+                    <View style={{flexDirection:'row', backgroundColor:'white', paddingTop:10, paddingBottom:10, marginBottom:10}}>
+                        <TouchableOpacity style={{width:screen.width*0.5, borderRightColor:'#ccc', borderRightWidth:0.2, justifyContent:'center', alignItems: 'center',}}>
+                            <Text style={{fontSize:16}}>$800</Text>
+                            <Text style={{color:'#aaa', fontSize:12,}}>Revenue Today</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{width:screen.width*0.5, justifyContent:'center', alignItems: 'center',}}>
+                            <Text style={{fontSize:16}}>$8000</Text>
+                            <Text style={{color:'#aaa', fontSize:12,}}>Revenue In Total</Text>                        
+                        </TouchableOpacity>                        
+                    </View>
                     {this.renderCells()}
                 </ScrollView>
-            )
-        else
-            return (
-                <View>
-                    {this.renderHeader()}
-                    <Text style={{ marginTop: screen.width * 0.4, fontSize: 32, textAlign: 'center', color: '#ccc' }}>Not logged in</Text>
-                </View>
             )
     }
 
@@ -137,14 +159,14 @@ class MeScene extends PureComponent {
         return (
             [
                 [
-                    { title: 'My Reviews', icon: 'edit', goTo: 'MyReviews' },
-                    { title: 'Recent Views', icon: 'book', goTo: 'Recent' },
-                    { title: 'Profile', icon: 'id-card', goTo: 'Profile', smallerIcon:true },
-                    { title: 'Setting', icon: 'cog', goTo: 'Setting' },
+                    { title: 'Last Transcation', icon: 'edit', goTo: 'MyReviews' },
+                    { title: 'My Transcation Today', icon: 'book', goTo: 'Recent' },
+                    { title: 'My Revenue Today', icon: 'id-card', goTo: 'Profile', smallerIcon:true },
+                    { title: 'Promote My Shop', icon: 'cog', goTo: 'Setting' },
                 ],
                 [
-                    { title: 'Recommend to us!', icon: 'handshake-o', goTo: 'Recommend', smallerIcon:true },
-                    { title: 'Business', icon: 'briefcase', goTo: 'Business' }
+                    { title: 'Shop View History', icon: 'handshake-o', goTo: 'Recommend', smallerIcon:true },
+                    { title: 'Shop Revenue History', icon: 'briefcase', goTo: 'Business' }
                 ]
             ]
         )
